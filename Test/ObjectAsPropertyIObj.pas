@@ -12,21 +12,21 @@ uses
   LN.IObj, System.Classes, Generics.Collections, System.SysUtils;
 
 type
-  TPerson = class
+  TPerson = class(TComponent)
   private
     fName: string;
     fDOB: TDate;
   public
     property Name: string read fName write fName;
     property DOB: TDate read fDOB write fDOB;
-    constructor Create(Name : string; DOB : TDate);
+    constructor Create(Name : string; DOB : TDate); reintroduce;
   end;
   IPerson = IObj<TPerson>;
 
   TPersonArray = array of IPerson;
   IListPerson = IObj<TList<IPerson>>;
 
-  THouse= class
+  THouse= class(TComponent)
   private
     fOwners : TPersonArray;
     fResidents: TPersonArray;
@@ -40,7 +40,7 @@ type
     function getAllPeople : IListPerson;
     class function execute : boolean;
 
-    constructor Create(const address: string; owners: TPersonArray; residents: TPersonArray; const OwnObjects: boolean);
+    constructor Create(const address: string; owners: TPersonArray; residents: TPersonArray; const OwnObjects: boolean); reintroduce;
   end;
 
 implementation
@@ -49,6 +49,8 @@ implementation
 
 constructor THouse.Create(const address: string; owners: TPersonArray; residents: TPersonArray; const OwnObjects: boolean);
 begin
+  inherited Create(nil);
+
   fAddress := address;
   fOwners := owners;
   fResidents := residents;
@@ -89,6 +91,7 @@ end;
 
 constructor TPerson.Create(Name: string; DOB: TDate);
 begin
+  inherited Create(nil);
   fName := Name;
   fDOB := DOB;
 end;

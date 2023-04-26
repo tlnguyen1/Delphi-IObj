@@ -16,9 +16,6 @@ type
   TfrmIObjTestMain = class(TForm)
     FlowPanel1: TFlowPanel;
     btnHome: TButton;
-    btnLocalVariables: TButton;
-    btnMyClass: TButton;
-    btnLoopVariables: TButton;
     CardPanel1: TCardPanel;
     CardCode: TCard;
     CardIObj: TCard;
@@ -34,8 +31,19 @@ type
     btnIObjFix: TButton;
     memoIObjFix: TMemo;
     CardHome: TCard;
+    btnIObj: TButton;
+    btnLocalVariables: TButton;
+    btnMyClass: TButton;
+    btnLoopVariables: TButton;
     btnObjectAsProperty: TButton;
-    lblLeaked: TLabel;
+    cbLeaked: TCheckBox;
+    cbStandardFix: TCheckBox;
+    cbIObjFix: TCheckBox;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnHomeClick(Sender: TObject);
     procedure btnLocalVariablesClick(Sender: TObject);
@@ -88,7 +96,11 @@ end;
 // LocalVars
 procedure TfrmIObjTestMain.btnLocalVarsIObjClick(Sender: TObject);
 begin
-  TLocalVars.executeIObj;
+  try
+    TLocalVars.executeIObj;
+  finally
+    cbIObjFix.Checked := true;
+  end;
 end;
 
 procedure TfrmIObjTestMain.btnLocalVarsLeakedClick(Sender: TObject);
@@ -96,13 +108,17 @@ begin
   try
     TLocalVars.executeLeaked;
   finally
-    lblLeaked.Visible := true;
+    cbLeaked.Checked := true;
   end;
 end;
 
 procedure TfrmIObjTestMain.btnLocalVarsStandardClick(Sender: TObject);
 begin
-  TLocalVars.executeStandard;
+  try
+    TLocalVars.executeStandard;
+  finally
+    cbStandardFix.Checked := true;
+  end;
 end;
 
 // MyClass
@@ -114,8 +130,12 @@ end;
 
 procedure TfrmIObjTestMain.btnMyClassIObjClick(Sender: TObject);
 begin
-  var myClass := TObj.CreateInstance(MyClassIObj.TMyclass.Create);
-  myClass.Obj.execute;
+  try
+    var myClass := TObj.CreateInstance(MyClassIObj.TMyclass.Create);
+    myClass.Obj.execute;
+  finally
+    cbIObjFix.checked := true;
+  end;
 end;
 
 procedure TfrmIObjTestMain.btnMyClassLeakedClick(Sender: TObject);
@@ -124,14 +144,18 @@ begin
     var myClass := TObj.CreateInstance(MyClassLeaked.TMyclass.Create);
     myClass.Obj.execute;
   finally
-    lblLeaked.Visible := true;
+    cbLeaked.checked := true;
   end;
 end;
 
 procedure TfrmIObjTestMain.btnMyClassStandardClick(Sender: TObject);
 begin
-  var myClass := TObj.CreateInstance(MyClassStandard.TMyclass.Create);
-  myClass.Obj.execute;
+  try
+    var myClass := TObj.CreateInstance(MyClassStandard.TMyclass.Create);
+    myClass.Obj.execute;
+  finally
+    cbStandardFix.checked := true;
+  end;
 end;
 
 // LoopVariables
@@ -144,7 +168,11 @@ end;
 
 procedure TfrmIObjTestMain.btnLoopVarsIObjClick(Sender: TObject);
 begin
-  TLoopVars.executeIObj;
+  try
+    TLoopVars.executeIObj;
+  finally
+    cbIObjFix.checked := true;
+  end;
 end;
 
 procedure TfrmIObjTestMain.btnLoopVarsLeakedClick(Sender: TObject);
@@ -152,13 +180,17 @@ begin
   try
     TLoopVars.executeLeaked;
   finally
-    lblLeaked.Visible := true;
+    cbLeaked.checked := true;
   end;
 end;
 
 procedure TfrmIObjTestMain.btnLoopVarsStandardClick(Sender: TObject);
 begin
-  TLoopVars.executeStandard;
+  try
+    TLoopVars.executeStandard;
+  finally
+    cbStandardFix.checked := true;
+  end;
 end;
 
 // ObjectAsProperty
@@ -170,7 +202,11 @@ end;
 
 procedure TfrmIObjTestMain.btnObjectAsPropertyIObjClick(Sender: TObject);
 begin
-  ObjectAsPropertyIObj.THouse.execute;
+  try
+    ObjectAsPropertyIObj.THouse.execute;
+  finally
+    cbIObjFix.checked := true;
+  end;
 end;
 
 procedure TfrmIObjTestMain.btnObjectAsPropertyLeakedClick(Sender: TObject);
@@ -178,7 +214,7 @@ begin
   try
     ObjectAsPropertyLeaked.THouse.execute;
   finally
-    lblLeaked.Visible := true;
+    cbLeaked.checked := true;
   end;
 end;
 
@@ -187,7 +223,7 @@ begin
   try
     ObjectAsPropertyStandard.THouse.execute;
   finally
-    lblLeaked.Visible := true;
+    cbStandardFix.checked := true;
   end;
 end;
 
@@ -207,6 +243,7 @@ end;
 procedure TfrmIObjTestMain.FormCreate(Sender: TObject);
 begin
   CardPanel1.ActiveCard := cardHome;
+  pgCode.ActivePageIndex := 0;
   loadIObj;
 end;
 

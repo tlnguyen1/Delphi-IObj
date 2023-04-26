@@ -32,10 +32,10 @@ begin
   lst := TStringList.Create;
   // do some logic with lst
 
-  raise Exception.Create('Some error');
+  //raise Exception.Create('Some error');
   // Some logic exception causing exceptions can happen
 
-  lst.free;
+  // lst.free;
   // if exception occur, lst.free won't be executed.
 end;
 //LocalVarsLeaked-end
@@ -49,7 +49,7 @@ begin
   try
     // do some logic with lst
 
-    raise Exception.Create('Some error');
+    //raise Exception.Create('Some error');
     // Some logic exception causing exceptions can happen
 
   finally
@@ -65,7 +65,7 @@ begin
   var lst := TObj.CreateInstance(TStringList.Create);
   // do some logic with lst
 
-  raise Exception.Create('Some error');
+  //raise Exception.Create('Some error');
   // Some logic exception causing exceptions can happen
 end;
 //LocalVarsIObj-end
