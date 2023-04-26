@@ -223,6 +223,8 @@ object frmIObjTestMain: TfrmIObjTestMain
         ActivePage = tbCodeLeaked
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 578
+        ExplicitHeight = 564
         object tbCodeLeaked: TTabSheet
           Caption = 'Leaked'
           DesignSize = (
@@ -240,6 +242,8 @@ object frmIObjTestMain: TfrmIObjTestMain
             BevelOuter = bvNone
             ScrollBars = ssBoth
             TabOrder = 0
+            ExplicitWidth = 564
+            ExplicitHeight = 486
           end
           object btnLeaked: TButton
             Left = 3
@@ -249,6 +253,7 @@ object frmIObjTestMain: TfrmIObjTestMain
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 1
+            ExplicitTop = 499
           end
         end
         object tbCodeStandard: TTabSheet
