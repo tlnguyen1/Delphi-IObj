@@ -7,4 +7,4 @@ This library simplifies the way you write Delphi code that can avoid memory leak
     // myObj.Obj refers to the created TMyObject
     myObj.Obj
 
-   // No need to call myObj.free
+   // No need to call myObj.free at all.
