@@ -147,12 +147,11 @@ object frmIObjTestMain: TfrmIObjTestMain
     Top = 0
     Width = 600
     Height = 585
-    ActivePage = tsHome
+    ActivePage = tsCode
     Align = alClient
     TabOrder = 1
-    ExplicitLeft = 247
-    ExplicitWidth = 530
-    ExplicitHeight = 361
+    ExplicitWidth = 596
+    ExplicitHeight = 584
     object tsHome: TTabSheet
       Caption = 'Home'
       TabVisible = False
@@ -205,8 +204,6 @@ object frmIObjTestMain: TfrmIObjTestMain
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 0
-        ExplicitWidth = 598
-        ExplicitHeight = 583
       end
     end
     object tsCode: TTabSheet
@@ -223,13 +220,9 @@ object frmIObjTestMain: TfrmIObjTestMain
         Margins.Top = 5
         Margins.Right = 5
         Margins.Bottom = 5
-        ActivePage = tbCodeIObj
+        ActivePage = tbCodeLeaked
         Align = alClient
         TabOrder = 0
-        ExplicitLeft = 7
-        ExplicitTop = 0
-        ExplicitWidth = 584
-        ExplicitHeight = 572
         object tbCodeLeaked: TTabSheet
           Caption = 'Leaked'
           DesignSize = (
@@ -247,18 +240,15 @@ object frmIObjTestMain: TfrmIObjTestMain
             BevelOuter = bvNone
             ScrollBars = ssBoth
             TabOrder = 0
-            ExplicitWidth = 498
-            ExplicitHeight = 263
           end
           object btnLeaked: TButton
             Left = 3
-            Top = 738
+            Top = 500
             Width = 150
             Height = 25
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 1
-            ExplicitTop = 514
           end
         end
         object tbCodeStandard: TTabSheet
@@ -279,18 +269,15 @@ object frmIObjTestMain: TfrmIObjTestMain
             BevelOuter = bvNone
             ScrollBars = ssBoth
             TabOrder = 0
-            ExplicitWidth = 498
-            ExplicitHeight = 263
           end
           object btnStandardFix: TButton
             Left = 3
-            Top = 733
+            Top = 500
             Width = 150
             Height = 25
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 1
-            ExplicitTop = 509
           end
         end
         object tbCodeIObj: TTabSheet
@@ -301,13 +288,12 @@ object frmIObjTestMain: TfrmIObjTestMain
             535)
           object btnIObjFix: TButton
             Left = 3
-            Top = 733
+            Top = 500
             Width = 150
             Height = 25
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 0
-            ExplicitTop = 509
           end
           object memoIObjFix: TMemo
             AlignWithMargins = True
@@ -321,8 +307,6 @@ object frmIObjTestMain: TfrmIObjTestMain
             BevelOuter = bvNone
             ScrollBars = ssBoth
             TabOrder = 1
-            ExplicitWidth = 498
-            ExplicitHeight = 263
           end
         end
       end
