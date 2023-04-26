@@ -7,5 +7,4 @@ This library simplifies the way you write Delphi code that can avoid memory leak
     // myObj.Obj refers to the created TMyObject
     myObj.Obj
 
-    // You don't need try finally block to free myObj
-    // You don't need to free myObj in your class destructor.
+   // No need to call myObj.free
