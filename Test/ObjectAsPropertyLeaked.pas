@@ -49,13 +49,15 @@ begin
 end;
 
 destructor THouse.Destroy;
+var
+  person : TPerson;
 begin
   if fOwnObjects then
   begin
-    for var person in fOwners do
+    for person in fOwners do
       person.Free;
 
-    for var person in fResidents do
+    for person in fResidents do
       person.Free;
   end;
 
@@ -63,16 +65,19 @@ begin
 end;
 
 class function THouse.execute: boolean;
+var
+  p1, p2, p3, p4, p5 : TPerson;
+  House1, House2 : THouse;
 begin
-  var p1 := TPerson.Create('P1', StrToDate('1/1/2000'));
-  var p2 := TPerson.Create('P2', StrToDate('2/2/2000'));
-  var p3 := TPerson.Create('P3', StrToDate('3/3/2000'));
-  var p4 := TPerson.Create('P4', StrToDate('4/4/2000'));
-  var p5 := TPerson.Create('P5', StrToDate('5/5/2000'));
+  p1 := TPerson.Create('P1', StrToDate('1/1/2000'));
+  p2 := TPerson.Create('P2', StrToDate('2/2/2000'));
+  p3 := TPerson.Create('P3', StrToDate('3/3/2000'));
+  p4 := TPerson.Create('P4', StrToDate('4/4/2000'));
+  p5 := TPerson.Create('P5', StrToDate('5/5/2000'));
 
   // p1 owns 2 house1 & house2.
-  var House1 := THouse.Create('address1', [p1], [p2, p3], true);
-  var House2 := THouse.Create('address2', [p1], [p1, p4, p5], true);
+  House1 := THouse.Create('address1', [p1], [p2, p3], true);
+  House2 := THouse.Create('address2', [p1], [p1, p4, p5], true);
 
   // do some logic
 
@@ -83,14 +88,16 @@ end;
 
 // returns a list of distinct people from the lists of owners and renters
 function THouse.getAllPeople: TList<TPerson>;
+var
+  person : TPerson;
 begin
   result := TList<TPerson>.Create;
 
-  for var person in fOwners do
+  for person in fOwners do
     if (result.IndexOf(person) < 0) then
       result.Add(person);
 
-  for var person in fResidents do
+  for person in fResidents do
     if (result.IndexOf(person) < 0) then
       result.Add(person);
 end;

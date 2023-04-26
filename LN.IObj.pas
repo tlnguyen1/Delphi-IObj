@@ -68,26 +68,32 @@ begin
 end;
 
 class function TObj.ToList<T>(src: TList<IObj<T>>): IObj<TList<T>>;
+var
+  item : IObj<T>;
 begin
   result := TObj.CreateList<T>;
 
-  for var item in src do
+  for item in src do
     result.Obj.Add(item.Obj);
 end;
 
 class function TObj.ToList<T>(src: array of T): IObj<TList<T>>;
+var
+  item : T;
 begin
   result := TObj.CreateList<T>;
 
-  for var item in src do
+  for item in src do
     result.Obj.Add(item);
 end;
 
 class function TObj.ToIList<T>(src: TList<T>): IObj<TList<IObj<T>>>;
+var
+  item : T;
 begin
   result := TObj.CreateIList<T>;
 
-  for var item in src do
+  for item in src do
     result.Obj.Add(TObj.CreateInstance(item));
 end;
 

@@ -61,8 +61,10 @@ end;
 
 //LocalVarsIObj-begin
 class procedure TLocalVars.executeIObj;
+var
+  lst : IObj<TStringList>;
 begin
-  var lst := TObj.CreateInstance(TStringList.Create);
+  lst := TObj.CreateInstance(TStringList.Create);
   // do some logic with lst
 
   //raise Exception.Create('Some error');
@@ -77,10 +79,13 @@ end;
 class procedure TLoopVars.executeIObj;
 const
   n = 10;
+var
+  i : Integer;
+  lst : IObj<TStringList>;
 begin
-  for var i := 0 to n-1 do
+  for i := 0 to n-1 do
   begin
-    var lst := TObj.CreateInstance(TStringList.Create);
+    lst := TObj.CreateInstance(TStringList.Create);
 
     lst.Obj.Add('line1');
     lst.Obj.Add('line2');
@@ -93,10 +98,13 @@ end;
 class procedure TLoopVars.executeLeaked;
 const
   n = 10;
+var
+  i : Integer;
+  lst : TStringList;
 begin
-  for var i := 0 to n-1 do
+  for i := 0 to n-1 do
   begin
-    var lst := TStringList.Create;
+    lst := TStringList.Create;
 
     lst.Add('line1');
     lst.Add('line2');
@@ -109,10 +117,13 @@ end;
 class procedure TLoopVars.executeStandard;
 const
   n = 10;
+var
+  i : Integer;
+  lst : TStringList;
 begin
-  for var i := 0 to n-1 do
+  for i := 0 to n-1 do
   begin
-    var lst := TStringList.Create;
+    lst := TStringList.Create;
     try
       lst.Add('line1');
       lst.Add('line2');

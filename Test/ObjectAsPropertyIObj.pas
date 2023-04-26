@@ -58,16 +58,19 @@ begin
 end;
 
 class function THouse.execute: boolean;
+var
+  p1, p2, p3, p4, p5 : IObj<TPerson>;
+  House1, House2 : IObj<THouse>;
 begin
-  var p1 := TObj.CreateInstance(TPerson.Create('P1', StrToDate('1/1/2000')));
-  var p2 := TObj.CreateInstance(TPerson.Create('P2', StrToDate('2/2/2000')));
-  var p3 := TObj.CreateInstance(TPerson.Create('P3', StrToDate('3/3/2000')));
-  var p4 := TObj.CreateInstance(TPerson.Create('P4', StrToDate('4/4/2000')));
-  var p5 := TObj.CreateInstance(TPerson.Create('P5', StrToDate('5/5/2000')));
+  p1 := TObj.CreateInstance(TPerson.Create('P1', StrToDate('1/1/2000')));
+  p2 := TObj.CreateInstance(TPerson.Create('P2', StrToDate('2/2/2000')));
+  p3 := TObj.CreateInstance(TPerson.Create('P3', StrToDate('3/3/2000')));
+  p4 := TObj.CreateInstance(TPerson.Create('P4', StrToDate('4/4/2000')));
+  p5 := TObj.CreateInstance(TPerson.Create('P5', StrToDate('5/5/2000')));
 
   // p1 owns 2 house1 & house2.
-  var House1 := TObj.CreateInstance(THouse.Create('address1', [p1], [p2, p3], true));
-  var House2 := TObj.CreateInstance(THouse.Create('address2', [p1], [p1, p4, p5], true));
+  House1 := TObj.CreateInstance(THouse.Create('address1', [p1], [p2, p3], true));
+  House2 := TObj.CreateInstance(THouse.Create('address2', [p1], [p1, p4, p5], true));
 
   // do some logic
   Result := True;
@@ -75,14 +78,16 @@ end;
 
 // returns a list of distinct people from the lists of owners and renters
 function THouse.getAllPeople: IListPerson;
+var
+  person : IPerson;
 begin
   result := TObj.CreateInstance(TList<IPerson>.Create);
 
-  for var person in fOwners do
+  for person in fOwners do
     if (result.Obj.IndexOf(person) < 0) then
       result.Obj.Add(person);
 
-  for var person in fResidents do
+  for person in fResidents do
     if (result.Obj.IndexOf(person) < 0) then
       result.Obj.Add(person);
 end;

@@ -4,7 +4,7 @@ interface
 
 uses
   LN.IObj, System.Types, 
-  LocalVars, 
+  LocalVars,
   MyClassLeaked, MyClassStandard, MyClassIObj,
   ObjectAsPropertyLeaked, ObjectAsPropertyStandard, ObjectAsPropertyIObj,
 
@@ -16,9 +16,23 @@ type
   TfrmIObjTestMain = class(TForm)
     FlowPanel1: TFlowPanel;
     btnHome: TButton;
-    CardPanel1: TCardPanel;
-    CardCode: TCard;
-    CardIObj: TCard;
+    btnIObj: TButton;
+    btnLocalVariables: TButton;
+    btnMyClass: TButton;
+    btnLoopVariables: TButton;
+    btnObjectAsProperty: TButton;
+    cbLeaked: TCheckBox;
+    cbStandardFix: TCheckBox;
+    cbIObjFix: TCheckBox;
+    PageControl1: TPageControl;
+    tsHome: TTabSheet;
+    tsIObj: TTabSheet;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    tsCode: TTabSheet;
     memoIObj: TMemo;
     pgCode: TPageControl;
     tbCodeLeaked: TTabSheet;
@@ -30,20 +44,6 @@ type
     tbCodeIObj: TTabSheet;
     btnIObjFix: TButton;
     memoIObjFix: TMemo;
-    CardHome: TCard;
-    btnIObj: TButton;
-    btnLocalVariables: TButton;
-    btnMyClass: TButton;
-    btnLoopVariables: TButton;
-    btnObjectAsProperty: TButton;
-    cbLeaked: TCheckBox;
-    cbStandardFix: TCheckBox;
-    cbIObjFix: TCheckBox;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure btnHomeClick(Sender: TObject);
     procedure btnLocalVariablesClick(Sender: TObject);
@@ -90,7 +90,7 @@ implementation
 
 procedure TfrmIObjTestMain.btnHomeClick(Sender: TObject);
 begin
-  CardPanel1.ActiveCard := cardHome;
+  PageControl1.ActivePage := tsHome;
 end;
 
 // LocalVars
@@ -125,13 +125,15 @@ end;
 procedure TfrmIObjTestMain.btnMyClassClick(Sender: TObject);
 begin
   loadMyClass;
-  CardPanel1.ActiveCard := cardCode;
+  PageControl1.ActivePage := tsCode;
 end;
 
 procedure TfrmIObjTestMain.btnMyClassIObjClick(Sender: TObject);
+var
+  myClass : IObj<MyClassIObj.TMyclass>;
 begin
   try
-    var myClass := TObj.CreateInstance(MyClassIObj.TMyclass.Create);
+    myClass := TObj.CreateInstance(MyClassIObj.TMyclass.Create);
     myClass.Obj.execute;
   finally
     cbIObjFix.checked := true;
@@ -139,9 +141,11 @@ begin
 end;
 
 procedure TfrmIObjTestMain.btnMyClassLeakedClick(Sender: TObject);
+var
+  myClass : IObj<MyClassLeaked.TMyclass>;
 begin
   try
-    var myClass := TObj.CreateInstance(MyClassLeaked.TMyclass.Create);
+    myClass := TObj.CreateInstance(MyClassLeaked.TMyclass.Create);
     myClass.Obj.execute;
   finally
     cbLeaked.checked := true;
@@ -149,9 +153,11 @@ begin
 end;
 
 procedure TfrmIObjTestMain.btnMyClassStandardClick(Sender: TObject);
+var
+  myClass : IObj<MyClassStandard.TMyclass>;
 begin
   try
-    var myClass := TObj.CreateInstance(MyClassStandard.TMyclass.Create);
+    myClass := TObj.CreateInstance(MyClassStandard.TMyclass.Create);
     myClass.Obj.execute;
   finally
     cbStandardFix.checked := true;
@@ -162,7 +168,7 @@ end;
 procedure TfrmIObjTestMain.btnLoopVariablesClick(Sender: TObject);
 begin
   loadLoopVars;
-  CardPanel1.ActiveCard := cardCode;
+  PageControl1.ActivePage := tsCode;
 end;
 
 
@@ -197,7 +203,7 @@ end;
 procedure TfrmIObjTestMain.btnObjectAsPropertyClick(Sender: TObject);
 begin
   loadObjectAsProperty;
-  CardPanel1.ActiveCard := cardCode;
+  PageControl1.ActivePage := tsCode;
 end;
 
 procedure TfrmIObjTestMain.btnObjectAsPropertyIObjClick(Sender: TObject);
@@ -230,33 +236,38 @@ end;
 
 procedure TfrmIObjTestMain.btnIObjClick(Sender: TObject);
 begin
-  CardPanel1.ActiveCard := cardIObj;
+  PageControl1.ActivePage := tsIObj;
 end;
 
 procedure TfrmIObjTestMain.btnLocalVariablesClick(Sender: TObject);
 begin
   loadLocalVars;
-  CardPanel1.ActiveCard := cardCode;
+  PageControl1.ActivePage := tsCode;
 
 end;
 
 procedure TfrmIObjTestMain.FormCreate(Sender: TObject);
 begin
-  CardPanel1.ActiveCard := cardHome;
+  PageControl1.ActivePage := tsHome;
   pgCode.ActivePageIndex := 0;
   loadIObj;
 end;
 
 function TfrmIObjTestMain.getCode(src: TStrings; const tag: string): string;
+var
+  lst : IObj<TStringList>;
+  tagBegin : Integer;
+  tagEnd : Integer;
+  i : Integer;
 begin
-  var lst := TObj.CreateInstance(TStringList.Create);
+  lst := TObj.CreateInstance(TStringList.Create);
 
-  var tagBegin := src.IndexOf(format('//%s-begin', [tag]));
-  var tagEnd := src.IndexOf(format('//%s-end', [tag]));
+  tagBegin := src.IndexOf(format('//%s-begin', [tag]));
+  tagEnd := src.IndexOf(format('//%s-end', [tag]));
 
   if (tagBegin > 0) and (tagEnd > tagBegin) then
   begin
-    for var i := tagBegin + 1 to tagEnd - 1 do
+    for i := tagBegin + 1 to tagEnd - 1 do
       lst.Obj.add(src[i]);
   end;
 
@@ -264,9 +275,12 @@ begin
 end;
 
 function TfrmIObjTestMain.getFile(const resourceName: string): string;
+var
+  ss : IObj<TStringStream>;
+  rs : IObj<TResourceStream>;
 begin
-  var ss := TObj.CreateInstance(TStringStream.Create);
-  var rs := TObj.CreateInstance(TResourceStream.Create(hInstance, resourceName, RT_RCDATA));
+  ss := TObj.CreateInstance(TStringStream.Create);
+  rs := TObj.CreateInstance(TResourceStream.Create(hInstance, resourceName, RT_RCDATA));
   ss.Obj.LoadFromStream(rs.Obj);
   result := ss.Obj.DataString;
 end;
@@ -278,8 +292,10 @@ begin
 end;
 
 procedure TfrmIObjTestMain.loadLocalVars;
+var
+  lst : IObj<TStringList>;
 begin
-  var lst := TObj.CreateInstance(TStringList.Create);
+  lst := TObj.CreateInstance(TStringList.Create);
   lst.Obj.Text := getFile('LocalVars');
 
   memoLeaked.Lines.Text := getCode(lst.Obj, 'LocalVarsLeaked');
@@ -292,8 +308,10 @@ begin
 end;
 
 procedure TfrmIObjTestMain.loadLoopVars;
+var
+  lst : IObj<TStringList>;
 begin
-  var lst := TObj.CreateInstance(TStringList.Create);
+  lst := TObj.CreateInstance(TStringList.Create);
   lst.Obj.Text := getFile('LocalVars');
 
   memoLeaked.Lines.Text := getCode(lst.Obj, 'LoopVarsLeaked');
