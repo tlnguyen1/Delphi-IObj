@@ -1,5 +1,5 @@
 # Delphi-IObj
-This library will help you to write code that can avoid memory leaks
+This library simplifies the way you write Delphi code that can avoid memory leaks
 
     // declare and instantiate variable of type TMyObject
     var myObj := TObj.CreateInstance(TMyObject.Create);
