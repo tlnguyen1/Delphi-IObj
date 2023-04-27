@@ -103,7 +103,7 @@ begin
     if result = '' then
       result := TPerson(person.Obj).Name
     else
-      result := result + ', ' + TPerson(person).Name;
+      result := result + ', ' + TPerson(person.Obj).Name;
   end;
 end;
 
