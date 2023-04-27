@@ -14,11 +14,11 @@ type
     myObj.Obj
   }
 
+  {$IF CompilerVersion >= 20}
   IObj<T> = Interface(IInterface)
     ['{C71075DF-1BCE-4A7E-935B-643DE4C785D6}']
     function GetObj: T;
     property Obj: T read GetObj;
-
   end;
 
   TObj<T: class> = class(TInterfacedObject, IObj<T>)
@@ -29,9 +29,24 @@ type
     constructor Create(Obj: T); reintroduce;
     destructor Destroy; override;
   end;
+  {$ENDIF}
 
-  TObj = class
+  IObj = Interface(IInterface)
+  ['{E60D7897-F083-411B-990D-C87523A80E41}']
+    function GetObj : TObject;
+    property Obj: TObject read GetObj;
+  End;
+
+  TObj = class(TInterfacedObject, IObj)
+  private
+    FObj : TObject;
+    function GetObj : TObject;
   public
+    property Obj : TObject read GetObj;
+    constructor Create(Obj : TObject); reintroduce;
+    destructor Destroy; override;
+
+    {$IF CompilerVersion >= 20}
     class function CreateInstance<T:class>(Obj: T) : IObj<T>;
     class function CreateList<T:class>: IObj<TList<T>>;
     class function CreateIList<T:class>: IObj<TList<IObj<T>>>;
@@ -39,6 +54,7 @@ type
     class function ToList<T:class>(src: TList<IObj<T>>) : IObj<TList<T>>; overload;
     class function ToList<T:class>(src: array of T) : IObj<TList<T>>; overload;
     class function ToIList<T:class>(src: TList<T>) : IObj<TList<IObj<T>>>;
+    {$ENDIF}
   end;
 
 implementation
@@ -62,6 +78,27 @@ begin
 end;
 
 { TObj }
+
+function TObj.GetObj: TObject;
+begin
+  result := FObj;
+end;
+
+constructor TObj.Create(Obj: TObject);
+begin
+  inherited Create;
+
+  FObj := Obj;
+end;
+
+destructor TObj.Destroy;
+begin
+  FObj.free;
+  inherited;
+end;
+
+
+{$IF CompilerVersion >= 20}
 class function TObj.CreateInstance<T>(Obj: T): IObj<T>;
 begin
   result := TObj<T>.Create(Obj);
@@ -107,4 +144,5 @@ begin
   result := TObj<TList<T>>.Create(TList<T>.Create);
 end;
 
+{$IFEND}
 end.

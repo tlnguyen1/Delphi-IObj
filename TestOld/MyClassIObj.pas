@@ -2,7 +2,7 @@ unit MyClassIObj;
 
 interface
 uses
-  LN.IObj.Old, System.Classes, System.SysUtils;
+  LN.IObj, System.Classes, System.SysUtils;
 
 type
   TMyclass = class

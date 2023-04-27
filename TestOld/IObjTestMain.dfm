@@ -2,8 +2,8 @@ object frmIObjTestMain: TfrmIObjTestMain
   Left = 0
   Top = 0
   Caption = 'IObj Test Main'
-  ClientHeight = 583
-  ClientWidth = 777
+  ClientHeight = 582
+  ClientWidth = 773
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,11 +18,12 @@ object frmIObjTestMain: TfrmIObjTestMain
     Left = 0
     Top = 0
     Width = 220
-    Height = 583
+    Height = 582
     Align = alLeft
     FlowStyle = fsTopBottomLeftRight
     ShowCaption = False
     TabOrder = 0
+    ExplicitHeight = 583
     object btnHome: TButton
       AlignWithMargins = True
       Left = 11
@@ -156,15 +157,14 @@ object frmIObjTestMain: TfrmIObjTestMain
   object CardPanel1: TCardPanel
     Left = 220
     Top = 0
-    Width = 557
-    Height = 583
+    Width = 553
+    Height = 582
     Align = alClient
     ActiveCard = CardCode
     Caption = 'CardPanel1'
     TabOrder = 1
     ExplicitLeft = 185
     ExplicitWidth = 588
-    ExplicitHeight = 582
     object CardCode: TCard
       Left = 1
       Top = 1
@@ -197,14 +197,14 @@ object frmIObjTestMain: TfrmIObjTestMain
         object tbCodeLeaked: TTabSheet
           Caption = 'Leaked'
           DesignSize = (
-            537
-            535)
+            533
+            534)
           object memoLeaked: TMemo
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 531
-            Height = 487
+            Width = 527
+            Height = 486
             Margins.Bottom = 45
             Align = alClient
             BevelInner = bvNone
@@ -216,7 +216,7 @@ object frmIObjTestMain: TfrmIObjTestMain
           end
           object btnLeaked: TButton
             Left = 3
-            Top = 507
+            Top = 506
             Width = 150
             Height = 25
             Anchors = [akLeft, akBottom]
@@ -229,14 +229,14 @@ object frmIObjTestMain: TfrmIObjTestMain
           Caption = 'Standard Fix'
           ImageIndex = 1
           DesignSize = (
-            537
-            535)
+            533
+            534)
           object memoStandardFix: TMemo
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 531
-            Height = 487
+            Width = 527
+            Height = 486
             Margins.Bottom = 45
             Align = alClient
             BevelInner = bvNone
@@ -244,38 +244,41 @@ object frmIObjTestMain: TfrmIObjTestMain
             ScrollBars = ssBoth
             TabOrder = 0
             ExplicitWidth = 566
+            ExplicitHeight = 487
           end
           object btnStandardFix: TButton
             Left = 3
-            Top = 502
+            Top = 501
             Width = 150
             Height = 25
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 1
+            ExplicitTop = 502
           end
         end
         object tbCodeIObj: TTabSheet
           Caption = 'IObj Fix'
           ImageIndex = 2
           DesignSize = (
-            537
-            535)
+            533
+            534)
           object btnIObjFix: TButton
             Left = 3
-            Top = 502
+            Top = 501
             Width = 150
             Height = 25
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 0
+            ExplicitTop = 502
           end
           object memoIObjFix: TMemo
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 531
-            Height = 487
+            Width = 527
+            Height = 486
             Margins.Bottom = 45
             Align = alClient
             BevelInner = bvNone
@@ -283,6 +286,7 @@ object frmIObjTestMain: TfrmIObjTestMain
             ScrollBars = ssBoth
             TabOrder = 1
             ExplicitWidth = 566
+            ExplicitHeight = 487
           end
         end
       end
@@ -290,12 +294,13 @@ object frmIObjTestMain: TfrmIObjTestMain
     object CardIObj: TCard
       Left = 1
       Top = 1
-      Width = 555
-      Height = 581
+      Width = 551
+      Height = 580
       Caption = 'CardIObj'
       CardIndex = 1
       TabOrder = 1
       ExplicitWidth = 590
+      ExplicitHeight = 581
       object memoIObj: TMemo
         Left = 0
         Top = 0
@@ -311,12 +316,13 @@ object frmIObjTestMain: TfrmIObjTestMain
     object CardHome: TCard
       Left = 1
       Top = 1
-      Width = 555
-      Height = 581
+      Width = 551
+      Height = 580
       Caption = 'CardHome'
       CardIndex = 2
       TabOrder = 2
       ExplicitWidth = 590
+      ExplicitHeight = 581
       object Label1: TLabel
         Left = 48
         Top = 24

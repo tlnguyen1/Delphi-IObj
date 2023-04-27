@@ -136,7 +136,7 @@
         <DCCReference Include="ObjectAsPropertyIObj.pas"/>
         <DCCReference Include="ObjectAsPropertyLeaked.pas"/>
         <DCCReference Include="ObjectAsPropertyStandard.pas"/>
-        <DCCReference Include="..\LN.IObj.Old.pas"/>
+        <DCCReference Include="..\LN.IObj.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
