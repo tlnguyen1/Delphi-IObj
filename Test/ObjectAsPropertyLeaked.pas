@@ -1,9 +1,8 @@
 unit ObjectAsPropertyLeaked;
 
-
 interface
 uses
-  System.Classes, Generics.Collections, System.SysUtils;
+  System.Classes, Generics.Collections, System.SysUtils, Dialogs;
 
 type
   TPerson = class
@@ -18,6 +17,7 @@ type
 
   TPersonArray = array of TPerson;
 
+
   THouse= class
   private
     fOwners : TPersonArray;
@@ -30,10 +30,10 @@ type
     property Residents : TPersonArray read fResidents;
 
     function getAllPeople : TList<TPerson>;
+    class function getNames(lst: TPersonArray): string;
     class function execute : boolean;
 
     constructor Create(const address: string; owners: TPersonArray; residents: TPersonArray; const OwnObjects: boolean);
-    destructor Destroy; override;
   end;
 
 implementation
@@ -48,26 +48,10 @@ begin
   fOwnObjects := OwnObjects;
 end;
 
-destructor THouse.Destroy;
-var
-  person : TPerson;
-begin
-  if fOwnObjects then
-  begin
-    for person in fOwners do
-      person.Free;
-
-    for person in fResidents do
-      person.Free;
-  end;
-
-  inherited;
-end;
-
 class function THouse.execute: boolean;
 var
   p1, p2, p3, p4, p5 : TPerson;
-  House1, House2 : THouse;
+  house1, house2 : THouse;
 begin
   p1 := TPerson.Create('P1', StrToDate('1/1/2000'));
   p2 := TPerson.Create('P2', StrToDate('2/2/2000'));
@@ -76,13 +60,17 @@ begin
   p5 := TPerson.Create('P5', StrToDate('5/5/2000'));
 
   // p1 owns 2 house1 & house2.
-  House1 := THouse.Create('address1', [p1], [p2, p3], true);
-  House2 := THouse.Create('address2', [p1], [p1, p4, p5], true);
+  house1 := THouse.Create('address1', [p1], [p2, p3], true);
+  house2 := THouse.Create('address2', [p1], [p1, p4, p5], true);
 
   // do some logic
+  showMessage('Property: ' + house1.Address + #13#10 +
+              'Owner: ' + THouse.getNames(house1.Owners) + #13#10 +
+              'Residents: ' + THouse.getNames(house1.Residents));
 
-  House1.Free;
-  House2.Free;
+  showMessage('Property: ' + house2.Address + #13#10 +
+              'Owner: ' + THouse.getNames(house2.Owners) + #13#10 +
+              'Residents: ' + THouse.getNames(house2.Residents));
   Result := True;
 end;
 
@@ -100,6 +88,20 @@ begin
   for person in fResidents do
     if (result.IndexOf(person) < 0) then
       result.Add(person);
+end;
+
+class function THouse.getNames(lst: TPersonArray): string;
+var
+  person : TPerson;
+begin
+  result := '';
+  for person in lst do
+  begin
+    if result = '' then
+      result := person.Name
+    else
+      result := result + ', ' + person.Name;
+  end;
 end;
 
 { TPerson }
