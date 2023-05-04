@@ -6,7 +6,7 @@ uses
   LN.IObj, System.Types, 
   LocalVars,
   MyClassLeaked, MyClassStandard, MyClassIObj,
-  ObjectAsPropertyLeaked, ObjectAsPropertyStandard, ObjectAsPropertyIObj,
+  ObjectAsPropertyLeaked, ObjectAsPropertyStandard, ObjectAsPropertyIObj, PersonClass,
 
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, 
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, 
@@ -16,7 +16,6 @@ type
   TfrmIObjTestMain = class(TForm)
     FlowPanel1: TFlowPanel;
     btnHome: TButton;
-    btnIObj: TButton;
     btnLocalVariables: TButton;
     btnMyClass: TButton;
     btnLoopVariables: TButton;
@@ -27,11 +26,6 @@ type
     PageControl1: TPageControl;
     tsHome: TTabSheet;
     tsIObj: TTabSheet;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
     tsCode: TTabSheet;
     memoIObj: TMemo;
     pgCode: TPageControl;
@@ -45,6 +39,7 @@ type
     btnIObjFix: TButton;
     memoIObjFix: TMemo;
     cbLineNumbers: TCheckBox;
+    memoCode: TMemo;
     procedure FormCreate(Sender: TObject);
     procedure btnHomeClick(Sender: TObject);
     procedure btnLocalVariablesClick(Sender: TObject);
@@ -134,36 +129,27 @@ begin
 end;
 
 procedure TfrmIObjTestMain.btnMyClassIObjClick(Sender: TObject);
-var
-  myClass : IObj<MyClassIObj.TMyclass>;
 begin
   try
-    myClass := TObj.CreateInstance(MyClassIObj.TMyclass.Create);
-    myClass.Obj.execute;
+    MyClassIObj.TMyclass.execute;
   finally
     cbIObjFix.checked := true;
   end;
 end;
 
 procedure TfrmIObjTestMain.btnMyClassLeakedClick(Sender: TObject);
-var
-  myClass : IObj<MyClassLeaked.TMyclass>;
 begin
   try
-    myClass := TObj.CreateInstance(MyClassLeaked.TMyclass.Create);
-    myClass.Obj.execute;
+    MyClassLeaked.TMyclass.execute;
   finally
     cbLeaked.checked := true;
   end;
 end;
 
 procedure TfrmIObjTestMain.btnMyClassStandardClick(Sender: TObject);
-var
-  myClass : IObj<MyClassStandard.TMyclass>;
 begin
   try
-    myClass := TObj.CreateInstance(MyClassStandard.TMyclass.Create);
-    myClass.Obj.execute;
+    MyClassStandard.TMyclass.execute;
   finally
     cbStandardFix.checked := true;
   end;
@@ -214,7 +200,14 @@ end;
 procedure TfrmIObjTestMain.btnObjectAsPropertyIObjClick(Sender: TObject);
 begin
   try
-    ObjectAsPropertyIObj.THouse.execute;
+    ObjectAsPropertyIObj.THouse.execute(
+        procedure (house: ObjectAsPropertyIObj.THouse)
+        begin
+          showMessage('Property: ' + house.Address + #13#10 +
+                      'Owner: ' + TPerson.getNames(house.Owners) + #13#10 +
+                      'Residents: ' + TPerson.getNames(house.Residents));
+        end
+    );
   finally
     cbIObjFix.checked := true;
   end;
@@ -223,7 +216,14 @@ end;
 procedure TfrmIObjTestMain.btnObjectAsPropertyLeakedClick(Sender: TObject);
 begin
   try
-    ObjectAsPropertyLeaked.THouse.execute;
+    ObjectAsPropertyLeaked.THouse.execute(
+        procedure (house: ObjectAsPropertyLeaked.THouse)
+        begin
+          showMessage('Property: ' + house.Address + #13#10 +
+                      'Owner: ' + TPerson.getNames(house.Owners) + #13#10 +
+                      'Residents: ' + TPerson.getNames(house.Residents));
+        end
+    );
   finally
     cbLeaked.checked := true;
   end;
@@ -232,7 +232,14 @@ end;
 procedure TfrmIObjTestMain.btnObjectAsPropertyStandardClick(Sender: TObject);
 begin
   try
-    ObjectAsPropertyStandard.THouse.execute;
+    ObjectAsPropertyStandard.THouse.execute(
+        procedure (house: ObjectAsPropertyStandard.THouse)
+        begin
+          showMessage('Property: ' + house.Address + #13#10 +
+                      'Owner: ' + TPerson.getNames(house.Owners) + #13#10 +
+                      'Residents: ' + TPerson.getNames(house.Residents));
+        end
+    );
   finally
     cbStandardFix.checked := true;
   end;
@@ -274,7 +281,7 @@ var
   tagEnd : Integer;
   i : Integer;
 begin
-  lst := TObj.CreateInstance(TStringList.Create);
+  lst := TObj.Create(TStringList.Create);
 
   tagBegin := src.IndexOf(format('//%s-begin', [tag]));
   tagEnd := src.IndexOf(format('//%s-end', [tag]));
@@ -292,9 +299,10 @@ function TfrmIObjTestMain.getFile(const resourceName: string): string;
 var
   ss : IObj<TStringStream>;
   rs : IObj<TResourceStream>;
+
 begin
-  ss := TObj.CreateInstance(TStringStream.Create);
-  rs := TObj.CreateInstance(TResourceStream.Create(hInstance, resourceName, RT_RCDATA));
+  ss := TObj.Create(TStringStream.Create);
+  rs := TObj.Create(TResourceStream.Create(hInstance, resourceName, RT_RCDATA));
   ss.Obj.LoadFromStream(rs.Obj);
   result := ss.Obj.DataString;
 end;
@@ -311,7 +319,7 @@ procedure TfrmIObjTestMain.loadLocalVars;
 var
   lst : IObj<TStringList>;
 begin
-  lst := TObj.CreateInstance(TStringList.Create);
+  lst := TObj.Create(TStringList.Create);
   lst.Obj.Text := getFile('LocalVars');
 
   showCode(
@@ -329,7 +337,7 @@ procedure TfrmIObjTestMain.loadLoopVars;
 var
   lst : IObj<TStringList>;
 begin
-  lst := TObj.CreateInstance(TStringList.Create);
+  lst := TObj.Create(TStringList.Create);
   lst.Obj.Text := getFile('LocalVars');
 
   showCode(

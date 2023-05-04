@@ -14,12 +14,21 @@ uses
 
 type
   TfrmIObjTestMain = class(TForm)
-    FlowPanel1: TFlowPanel;
+    FlowPanel1: TPanel;
     btnHome: TButton;
-    CardPanel1: TCardPanel;
-    CardCode: TCard;
-    CardIObj: TCard;
+    btnLocalVariables: TButton;
+    btnMyClass: TButton;
+    btnLoopVariables: TButton;
+    btnObjectAsProperty: TButton;
+    cbLeaked: TCheckBox;
+    cbStandardFix: TCheckBox;
+    cbIObjFix: TCheckBox;
+    cbLineNumbers: TCheckBox;
+    PageControl1: TPageControl;
+    tsHome: TTabSheet;
+    tsIObj: TTabSheet;
     memoIObj: TMemo;
+    tsCode: TTabSheet;
     pgCode: TPageControl;
     tbCodeLeaked: TTabSheet;
     memoLeaked: TMemo;
@@ -30,21 +39,7 @@ type
     tbCodeIObj: TTabSheet;
     btnIObjFix: TButton;
     memoIObjFix: TMemo;
-    CardHome: TCard;
-    btnIObj: TButton;
-    btnLocalVariables: TButton;
-    btnMyClass: TButton;
-    btnLoopVariables: TButton;
-    btnObjectAsProperty: TButton;
-    cbLeaked: TCheckBox;
-    cbStandardFix: TCheckBox;
-    cbIObjFix: TCheckBox;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    cbLineNumbers: TCheckBox;
+    memoCode: TMemo;
     procedure FormCreate(Sender: TObject);
     procedure btnHomeClick(Sender: TObject);
     procedure btnLocalVariablesClick(Sender: TObject);
@@ -95,7 +90,7 @@ implementation
 
 procedure TfrmIObjTestMain.btnHomeClick(Sender: TObject);
 begin
-  CardPanel1.ActiveCard := cardHome;
+  PageControl1.ActivePage := tsHome;
 end;
 
 // LocalVars
@@ -130,7 +125,7 @@ end;
 procedure TfrmIObjTestMain.btnMyClassClick(Sender: TObject);
 begin
   loadMyClass;
-  CardPanel1.ActiveCard := cardCode;
+  PageControl1.ActivePage := tsCode;
 end;
 
 procedure TfrmIObjTestMain.btnMyClassIObjClick(Sender: TObject);
@@ -173,7 +168,7 @@ end;
 procedure TfrmIObjTestMain.btnLoopVariablesClick(Sender: TObject);
 begin
   loadLoopVars;
-  CardPanel1.ActiveCard := cardCode;
+  PageControl1.ActivePage := tsCode;
 end;
 
 
@@ -208,7 +203,7 @@ end;
 procedure TfrmIObjTestMain.btnObjectAsPropertyClick(Sender: TObject);
 begin
   loadObjectAsProperty;
-  CardPanel1.ActiveCard := cardCode;
+  PageControl1.ActivePage := tsCode;
 end;
 
 procedure TfrmIObjTestMain.btnObjectAsPropertyIObjClick(Sender: TObject);
@@ -249,19 +244,19 @@ end;
 
 procedure TfrmIObjTestMain.btnIObjClick(Sender: TObject);
 begin
-  CardPanel1.ActiveCard := cardIObj;
+  PageControl1.ActivePage := tsIObj;
 end;
 
 procedure TfrmIObjTestMain.btnLocalVariablesClick(Sender: TObject);
 begin
   loadLocalVars;
-  CardPanel1.ActiveCard := cardCode;
+  PageControl1.ActivePage := tsCode;
 
 end;
 
 procedure TfrmIObjTestMain.FormCreate(Sender: TObject);
 begin
-  CardPanel1.ActiveCard := cardHome;
+  PageControl1.ActivePage := tsHome;
   pgCode.ActivePageIndex := 0;
   loadIObj;
 end;

@@ -137,6 +137,8 @@
         <DCCReference Include="ObjectAsPropertyIObj.pas"/>
         <DCCReference Include="ObjectAsPropertyLeaked.pas"/>
         <DCCReference Include="ObjectAsPropertyStandard.pas"/>
+        <DCCReference Include="..\LN.ObjList.pas"/>
+        <DCCReference Include="PersonClass.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

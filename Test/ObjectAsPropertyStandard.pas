@@ -1,39 +1,27 @@
 unit ObjectAsPropertyStandard;
 
-
 interface
 uses
-  System.Classes, Generics.Collections, System.SysUtils, Dialogs;
+  PersonClass, System.Classes, Generics.Collections, System.SysUtils;
 
 type
-  TPerson = class
-  private
-    fName: string;
-    fDOB: TDate;
-  public
-    property Name: string read fName write fName;
-    property DOB: TDate read fDOB write fDOB;
-    constructor Create(Name : string; DOB : TDate);
-  end;
-
-  TPersonArray = array of TPerson;
-
   THouse= class
   private
-    fOwners : TPersonArray;
-    fResidents: TPersonArray;
-    fOwnObjects: boolean;
+    fOwners : TArray<TPerson>;
+    fResidents: TArray<TPerson>;
     fAddress: string;
+
+    function getOwners: TArray<TPerson>;
+    function getResidents: TArray<TPerson>;
   public
     property Address : string read fAddress write fAddress;
-    property Owners : TPersonArray read fOwners;
-    property Residents : TPersonArray read fResidents;
+    property Owners : TArray<TPerson> read getOwners;
+    property Residents : TArray<TPerson> read getResidents;
 
     function getAllPeople : TList<TPerson>;
-    class function getNames(lst: TPersonArray): string;
-    class function execute : boolean;
+    class procedure execute(callback : TProc<THouse>);
 
-    constructor Create(const address: string; owners: TPersonArray; residents: TPersonArray; const OwnObjects: boolean);
+    constructor Create(const address: string; owners, residents: TArray<TPerson>);
     destructor Destroy; override;
   end;
 
@@ -41,12 +29,11 @@ implementation
 
 { THouse }
 
-constructor THouse.Create(const address: string; owners: TPersonArray; residents: TPersonArray; const OwnObjects: boolean);
+constructor THouse.Create(const address: string; owners, residents: TArray<TPerson>);
 begin
   fAddress := address;
   fOwners := owners;
   fResidents := residents;
-  fOwnObjects := OwnObjects;
 end;
 
 destructor THouse.Destroy;
@@ -54,44 +41,35 @@ var
   person : TPerson;
   listAll : TList<TPerson>;
 begin
-  if fOwnObjects then
-  begin
-    listAll := getAllPeople;
-    for person in listAll do
-      person.Free;
+  listAll := getAllPeople;
+  for person in listAll do
+    person.Free;
 
-    listAll.Free;
-  end;
+  listAll.Free;
 
   inherited;
 end;
 
-class function THouse.execute: boolean;
+class procedure THouse.execute(callback : TProc<THouse>);
 var
-  p1, p2, p3, p4, p5 : TPerson;
-  House1, House2 : THouse;
+  pArray : TArray<TPerson>;
+  house1, house2 : THouse;
 begin
-  p1 := TPerson.Create('P1', StrToDate('1/1/2000'));
-  p2 := TPerson.Create('P2', StrToDate('2/2/2000'));
-  p3 := TPerson.Create('P3', StrToDate('3/3/2000'));
-  p4 := TPerson.Create('P4', StrToDate('4/4/2000'));
-  p5 := TPerson.Create('P5', StrToDate('5/5/2000'));
+  pArray := TPerson.createPersonList;
 
   // p1 owns 2 house1 & house2.
-  House1 := THouse.Create('address1', [p1], [p2, p3], true);
-  House2 := THouse.Create('address2', [p1], [p1, p4, p5], true);
+  house1 := THouse.Create('address1', [pArray[0]], [pArray[1], pArray[2]]);
+  house2 := THouse.Create('address2', [pArray[0]], [pArray[0], pArray[3], pArray[4]]);
 
   // do some logic
-  showMessage('Property: ' + house1.Address + #13#10 +
-              'Owner: ' + THouse.getNames(house1.Owners) + #13#10 +
-              'Residents: ' + THouse.getNames(house1.Residents));
+  if assigned(callback) then
+  begin
+    callback(house1);
+    callback(house2);
+  end;
 
-  showMessage('Property: ' + house2.Address + #13#10 +
-              'Owner: ' + THouse.getNames(house2.Owners) + #13#10 +
-              'Residents: ' + THouse.getNames(house2.Residents));
-  House1.Free;
-  House2.Free;
-  Result := True;
+  house1.Free;
+  house2.Free;
 end;
 
 // returns a list of distinct people from the lists of owners and renters
@@ -110,26 +88,14 @@ begin
       result.Add(person);
 end;
 
-class function THouse.getNames(lst: TPersonArray): string;
-var
-  person : TPerson;
+function THouse.getOwners: TArray<TPerson>;
 begin
-  result := '';
-  for person in lst do
-  begin
-    if result = '' then
-      result := person.Name
-    else
-      result := result + ', ' + person.Name;
-  end;
+  result := fOwners;
 end;
 
-{ TPerson }
-
-constructor TPerson.Create(Name: string; DOB: TDate);
+function THouse.getResidents: TArray<TPerson>;
 begin
-  fName := Name;
-  fDOB := DOB;
+  result := fResidents;
 end;
 
 end.

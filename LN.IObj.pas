@@ -3,16 +3,34 @@ unit LN.IObj;
 interface
 
 uses
-  System.Classes, System.SysUtils, Generics.Collections;
+  System.Classes, System.SysUtils {$IF CompilerVersion >= 20}, Generics.Collections {$ENDIF};
 
 type
   {
     // declare and instantiate variable of type TMyObject
-    var myObj := TObj.CreateInstance(TMyObject.Create..);
+    var myVar := TObj.Create(TMyObject.Create);
 
-    // myObj.Obj refers to the created TMyObject
-    myObj.Obj
+    Note:
+      - Delphi support for generics starts from CompilerVersion 20
+      - To compile old syntax with new compiler, add conditional define UseBaseObj
   }
+
+  IObj = Interface(IInterface)
+  ['{E60D7897-F083-411B-990D-C87523A80E41}']
+    function GetObj : TObject;
+    property Obj: TObject read GetObj;
+  End;
+
+  // Don't use this class directly .. use TObj instead
+  TObjBase = class(TInterfacedObject, IObj)
+  private
+    FObj : TObject;
+    function GetObj : TObject;
+  public
+    property Obj : TObject read GetObj;
+    destructor Destroy; override;
+    constructor Create(Obj : TObject);
+  end;
 
   {$IF CompilerVersion >= 20}
   IObj<T> = Interface(IInterface)
@@ -21,128 +39,71 @@ type
     property Obj: T read GetObj;
   end;
 
-  TObj<T: class> = class(TInterfacedObject, IObj<T>)
+  TObj<T: class> = class(TObjBase, IObj<T>)
   private
-    FObj : T;
     function GetObj: T;
-  public
-    constructor Create(Obj: T); reintroduce;
-    destructor Destroy; override;
   end;
+
   {$ENDIF}
 
-  IObj = Interface(IInterface)
-  ['{E60D7897-F083-411B-990D-C87523A80E41}']
-    function GetObj : TObject;
-    property Obj: TObject read GetObj;
-  End;
-
-  TObj = class(TInterfacedObject, IObj)
-  private
-    FObj : TObject;
-    function GetObj : TObject;
+  TObj = class
   public
-    property Obj : TObject read GetObj;
-    constructor Create(Obj : TObject); reintroduce;
-    destructor Destroy; override;
+    {$IF (CompilerVersion < 20) or defined(UseBaseObj) }
+    class function Create(Obj: TObject) : IObj; overload;
+    {$ENDIF}
 
     {$IF CompilerVersion >= 20}
-    class function CreateInstance<T:class>(Obj: T) : IObj<T>;
-    class function CreateList<T:class>: IObj<TList<T>>;
-    class function CreateIList<T:class>: IObj<TList<IObj<T>>>;
+    class function Create<T:class>(Obj: T) : IObj<T>; overload;
 
-    class function ToList<T:class>(src: TList<IObj<T>>) : IObj<TList<T>>; overload;
-    class function ToList<T:class>(src: array of T) : IObj<TList<T>>; overload;
-    class function ToIList<T:class>(src: TList<T>) : IObj<TList<IObj<T>>>;
     {$ENDIF}
   end;
 
 implementation
 
-constructor TObj<T>.Create(Obj: T);
-begin
-  inherited Create;
-
-  FObj := Obj;
-end;
-
-destructor TObj<T>.Destroy;
+// TObjBase
+destructor TObjBase.Destroy;
 begin
   FObj.free;
   inherited;
 end;
 
-function TObj<T>.GetObj: T;
-begin
-  Result := FObj;
-end;
-
-{ TObj }
-
-function TObj.GetObj: TObject;
+function TObjBase.GetObj: TObject;
 begin
   result := FObj;
 end;
 
-constructor TObj.Create(Obj: TObject);
+constructor TObjBase.Create(Obj: TObject);
 begin
   inherited Create;
-
   FObj := Obj;
-end;
-
-destructor TObj.Destroy;
-begin
-  FObj.free;
-  inherited;
 end;
 
 
 {$IF CompilerVersion >= 20}
-class function TObj.CreateInstance<T>(Obj: T): IObj<T>;
+
+{ TObj<T> }
+function TObj<T>.GetObj: T;
+begin
+  Result := T(inherited GetObj);
+end;
+
+{ TObj }
+class function TObj.Create<T>(Obj: T): IObj<T>;
 begin
   result := TObj<T>.Create(Obj);
 end;
 
-class function TObj.ToList<T>(src: TList<IObj<T>>): IObj<TList<T>>;
-var
-  item : IObj<T>;
-begin
-  result := TObj.CreateList<T>;
-
-  for item in src do
-    result.Obj.Add(item.Obj);
-end;
-
-class function TObj.ToList<T>(src: array of T): IObj<TList<T>>;
-var
-  item : T;
-begin
-  result := TObj.CreateList<T>;
-
-  for item in src do
-    result.Obj.Add(item);
-end;
-
-class function TObj.ToIList<T>(src: TList<T>): IObj<TList<IObj<T>>>;
-var
-  item : T;
-begin
-  result := TObj.CreateIList<T>;
-
-  for item in src do
-    result.Obj.Add(TObj.CreateInstance(item));
-end;
-
-class function TObj.CreateIList<T>: IObj<TList<IObj<T>>>;
-begin
-  result := TObj<TList<IObj<T>>>.Create(TList<IObj<T>>.Create);
-end;
-
-class function TObj.CreateList<T>: IObj<TList<T>>;
-begin
-  result := TObj<TList<T>>.Create(TList<T>.Create);
-end;
-
 {$IFEND}
+
+{$IF (CompilerVersion < 20) or defined(UseBaseObj)}
+
+{ TObj }
+
+class function TObj.Create(Obj: TObject): IObj;
+begin
+  result := TObjBase.Create(Obj);
+end;
+
+{$ENDIF}
+
 end.

@@ -55,7 +55,7 @@ class procedure TLocalVars.executeIObj;
 var
   lst : IObj<TStringList>;
 begin
-  lst := TObj.CreateInstance(TStringList.Create);
+  lst := TObj.Create(TStringList.Create);
   // some logic
   lst.Obj.Add('hello world');
 end;
@@ -74,7 +74,7 @@ var
 begin
   for i := 0 to n-1 do
   begin
-    lst := TObj.CreateInstance(TStringList.Create);
+    lst := TObj.Create(TStringList.Create);
     // some logic
     lst.Obj.Add('hello world');
   end;

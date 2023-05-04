@@ -5,24 +5,37 @@ uses
   LN.IObj, System.Classes, System.SysUtils;
 
 type
-  TMyclass = class
+  TMyclass = class(TComponent)
   private
     flst: IObj<TStringList>;
+    function getMessages : TStrings;
   public
-    constructor Create;
-    procedure execute;
+    property messages: TStrings read getMessages;
+
+    constructor Create(AOwner: TComponent); override;
+    class procedure execute;
   end;
 implementation
 
-constructor TMyclass.Create;
+constructor TMyclass.Create(AOwner: TComponent);
 begin
-  flst := TObj.CreateInstance(TStringList.Create);
+  inherited;
+  flst := TObj.Create(TStringList.Create);
 end;
 
-procedure TMyclass.execute;
+class procedure TMyclass.execute;
+var
+  myClass : IObj<TMyClass>;
 begin
+  myClass := TObj.Create(TMyClass.Create(nil));
+
   // some logic
-  flst.Obj.Add('hello world');
+  myClass.Obj.messages.Add('hello world');
+end;
+
+function TMyclass.getMessages: TStrings;
+begin
+  result := flst.Obj;
 end;
 
 end.

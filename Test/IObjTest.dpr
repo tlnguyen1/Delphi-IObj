@@ -12,7 +12,9 @@ uses
   MyClassStandard in 'MyClassStandard.pas',
   ObjectAsPropertyIObj in 'ObjectAsPropertyIObj.pas',
   ObjectAsPropertyLeaked in 'ObjectAsPropertyLeaked.pas',
-  ObjectAsPropertyStandard in 'ObjectAsPropertyStandard.pas';
+  ObjectAsPropertyStandard in 'ObjectAsPropertyStandard.pas',
+  LN.ObjList in '..\LN.ObjList.pas',
+  PersonClass in 'PersonClass.pas';
 
 {$R *.res}
 

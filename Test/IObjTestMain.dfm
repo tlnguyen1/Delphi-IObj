@@ -23,53 +23,39 @@ object frmIObjTestMain: TfrmIObjTestMain
     FlowStyle = fsTopBottomLeftRight
     ShowCaption = False
     TabOrder = 0
-    ExplicitLeft = 1
+    ExplicitHeight = 584
     object btnHome: TButton
       AlignWithMargins = True
       Left = 11
-      Top = 6
+      Top = 11
       Width = 200
       Height = 25
       Margins.Left = 10
-      Margins.Top = 5
+      Margins.Top = 10
       Margins.Right = 10
       Margins.Bottom = 5
       Caption = 'Home'
       TabOrder = 0
       OnClick = btnHomeClick
     end
-    object btnIObj: TButton
-      AlignWithMargins = True
-      Left = 11
-      Top = 41
-      Width = 200
-      Height = 25
-      Margins.Left = 10
-      Margins.Top = 5
-      Margins.Right = 10
-      Margins.Bottom = 5
-      Caption = 'IObj'
-      TabOrder = 1
-      OnClick = btnIObjClick
-    end
     object btnLocalVariables: TButton
       AlignWithMargins = True
       Left = 11
-      Top = 76
+      Top = 71
       Width = 200
       Height = 25
       Margins.Left = 10
-      Margins.Top = 5
+      Margins.Top = 30
       Margins.Right = 10
       Margins.Bottom = 5
       Caption = 'Local Variables'
-      TabOrder = 2
+      TabOrder = 1
       OnClick = btnLocalVariablesClick
     end
     object btnMyClass: TButton
       AlignWithMargins = True
       Left = 11
-      Top = 111
+      Top = 106
       Width = 200
       Height = 25
       Margins.Left = 10
@@ -77,13 +63,13 @@ object frmIObjTestMain: TfrmIObjTestMain
       Margins.Right = 10
       Margins.Bottom = 5
       Caption = 'Variables Inside a Class'
-      TabOrder = 3
+      TabOrder = 2
       OnClick = btnMyClassClick
     end
     object btnLoopVariables: TButton
       AlignWithMargins = True
       Left = 11
-      Top = 146
+      Top = 141
       Width = 200
       Height = 25
       Margins.Left = 10
@@ -91,13 +77,13 @@ object frmIObjTestMain: TfrmIObjTestMain
       Margins.Right = 10
       Margins.Bottom = 5
       Caption = 'Loop variables'
-      TabOrder = 4
+      TabOrder = 3
       OnClick = btnLoopVariablesClick
     end
     object btnObjectAsProperty: TButton
       AlignWithMargins = True
       Left = 11
-      Top = 181
+      Top = 176
       Width = 200
       Height = 25
       Margins.Left = 10
@@ -105,52 +91,54 @@ object frmIObjTestMain: TfrmIObjTestMain
       Margins.Right = 10
       Margins.Bottom = 5
       Caption = 'Object Properties'
-      TabOrder = 5
+      TabOrder = 4
       OnClick = btnObjectAsPropertyClick
     end
     object cbLeaked: TCheckBox
       AlignWithMargins = True
       Left = 4
-      Top = 261
+      Top = 256
       Width = 200
       Height = 17
       Margins.Top = 50
       Align = alTop
       Caption = 'Leaked executed'
-      TabOrder = 6
+      TabOrder = 5
     end
     object cbStandardFix: TCheckBox
       AlignWithMargins = True
       Left = 4
-      Top = 291
+      Top = 286
       Width = 200
       Height = 17
       Margins.Top = 10
       Align = alTop
       Caption = 'Standard Fix executed'
-      TabOrder = 7
+      TabOrder = 6
     end
     object cbIObjFix: TCheckBox
       AlignWithMargins = True
       Left = 4
-      Top = 321
+      Top = 316
       Width = 200
       Height = 17
       Margins.Top = 10
       Align = alTop
       Caption = 'IObj Fix executed'
-      TabOrder = 8
+      TabOrder = 7
     end
     object cbLineNumbers: TCheckBox
       AlignWithMargins = True
       Left = 4
-      Top = 391
+      Top = 386
       Width = 200
       Height = 17
       Margins.Top = 50
       Align = alTop
       Caption = 'Show Line Numbers'
-      TabOrder = 9
+      Checked = True
+      State = cbChecked
+      TabOrder = 8
       OnClick = cbLineNumbersClick
     end
   end
@@ -159,7 +147,7 @@ object frmIObjTestMain: TfrmIObjTestMain
     Top = 0
     Width = 565
     Height = 585
-    ActivePage = tsCode
+    ActivePage = tsHome
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -168,45 +156,40 @@ object frmIObjTestMain: TfrmIObjTestMain
     Font.Style = []
     ParentFont = False
     TabOrder = 1
-    ExplicitLeft = 185
-    ExplicitWidth = 600
+    ExplicitWidth = 561
+    ExplicitHeight = 584
     object tsHome: TTabSheet
       Caption = 'Home'
       TabVisible = False
-      object Label1: TLabel
-        Left = 48
-        Top = 24
-        Width = 90
-        Height = 21
-        Caption = 'uses LN.IObj;'
-      end
-      object Label2: TLabel
-        Left = 48
-        Top = 95
-        Width = 313
-        Height = 21
-        Caption = 'var myObj := TIObj.Create(TMyObject.create);'
-      end
-      object Label3: TLabel
-        Left = 48
-        Top = 120
-        Width = 84
-        Height = 21
-        Caption = 'myObj.Obj...'
-      end
-      object Label4: TLabel
-        Left = 48
-        Top = 226
-        Width = 295
-        Height = 21
-        Caption = 'No need for destructor code to free myObj'
-      end
-      object Label5: TLabel
-        Left = 48
-        Top = 250
-        Width = 293
-        Height = 21
-        Caption = 'No need for try finally block to free myObj'
+      object memoCode: TMemo
+        Left = 40
+        Top = 33
+        Width = 481
+        Height = 424
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BorderStyle = bsNone
+        Lines.Strings = (
+          '// Generic syntax'
+          ''
+          'uses'
+          '    LN.IObj;'
+          ''
+          '---'
+          'var'
+          '    myObj : IObj<TMyObj>;'
+          '    lst : TStringList; ilst : IObj<TStringList>;'
+          'begin'
+          '    myObj := TObj.Create(TMyObj.Create);'
+          '    myObj.Obj.doSomeThing(2);'
+          ''
+          '    ilst := TObj.Create(TStringList.Create);'
+          '    lst := ilst.Obj;'
+          ''
+          '    lst.add('#39'hello world'#39');'
+          '    ilst.Obj.add('#39'hello world 2'#39');'
+          'end;')
+        TabOrder = 0
       end
     end
     object tsIObj: TTabSheet
@@ -222,7 +205,6 @@ object frmIObjTestMain: TfrmIObjTestMain
         Align = alClient
         ScrollBars = ssBoth
         TabOrder = 0
-        ExplicitWidth = 592
       end
     end
     object tsCode: TTabSheet
@@ -242,7 +224,6 @@ object frmIObjTestMain: TfrmIObjTestMain
         ActivePage = tbCodeLeaked
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 582
         object tbCodeLeaked: TTabSheet
           Caption = 'Leaked'
           DesignSize = (
@@ -260,8 +241,8 @@ object frmIObjTestMain: TfrmIObjTestMain
             BevelOuter = bvNone
             ScrollBars = ssBoth
             TabOrder = 0
-            ExplicitWidth = 564
-            ExplicitHeight = 486
+            ExplicitWidth = 529
+            ExplicitHeight = 480
           end
           object btnLeaked: TButton
             Left = 3
@@ -271,7 +252,7 @@ object frmIObjTestMain: TfrmIObjTestMain
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 1
-            ExplicitTop = 499
+            ExplicitTop = 493
           end
         end
         object tbCodeStandard: TTabSheet
@@ -292,8 +273,6 @@ object frmIObjTestMain: TfrmIObjTestMain
             BevelOuter = bvNone
             ScrollBars = ssBoth
             TabOrder = 0
-            ExplicitWidth = 568
-            ExplicitHeight = 487
           end
           object btnStandardFix: TButton
             Left = 3
@@ -303,7 +282,6 @@ object frmIObjTestMain: TfrmIObjTestMain
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 1
-            ExplicitTop = 500
           end
         end
         object tbCodeIObj: TTabSheet
@@ -320,7 +298,6 @@ object frmIObjTestMain: TfrmIObjTestMain
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 0
-            ExplicitTop = 500
           end
           object memoIObjFix: TMemo
             AlignWithMargins = True
@@ -334,8 +311,6 @@ object frmIObjTestMain: TfrmIObjTestMain
             BevelOuter = bvNone
             ScrollBars = ssBoth
             TabOrder = 1
-            ExplicitWidth = 568
-            ExplicitHeight = 487
           end
         end
       end

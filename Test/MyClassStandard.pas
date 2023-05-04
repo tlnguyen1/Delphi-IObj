@@ -5,18 +5,22 @@ uses
   System.Classes, System.SysUtils;
 
 type
-  TMyclass = class
+  TMyclass = class(TComponent)
   private
     flst: TStringList;
+    function getMessages : TStrings;
   public
-    constructor Create;
-    procedure execute;
+    property messages: TStrings read getMessages;
+
+    constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    class procedure execute;
   end;
 implementation
 
-constructor TMyclass.Create;
+constructor TMyclass.Create(AOwner: TComponent);
 begin
+  inherited;
   flst := TStringList.Create;
 end;
 
@@ -26,10 +30,23 @@ begin
   inherited;
 end;
 
-procedure TMyclass.execute;
+class procedure TMyclass.execute;
+var
+  myClass : TMyClass;
 begin
-  // some logic
-  flst.Add('hello world');
+  myClass := TMyClass.Create(nil);
+
+  try
+    // some logic
+    myClass.messages.Add('hello world');
+  finally
+    myClass.Free;
+  end;
+end;
+
+function TMyclass.getMessages: TStrings;
+begin
+  result := flst;
 end;
 
 end.
