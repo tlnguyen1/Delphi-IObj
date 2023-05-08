@@ -15,23 +15,6 @@ type
       - To compile old syntax with new compiler, add conditional define UseBaseObj
   }
 
-  IObj = Interface(IInterface)
-  ['{E60D7897-F083-411B-990D-C87523A80E41}']
-    function GetObj : TObject;
-    property Obj: TObject read GetObj;
-  End;
-
-  // Don't use this class directly .. use TObj instead
-  TObjBase = class(TInterfacedObject, IObj)
-  private
-    FObj : TObject;
-    function GetObj : TObject;
-  public
-    property Obj : TObject read GetObj;
-    destructor Destroy; override;
-    constructor Create(Obj : TObject);
-  end;
-
   {$IF CompilerVersion >= 20}
   IObj<T> = Interface(IInterface)
     ['{C71075DF-1BCE-4A7E-935B-643DE4C785D6}']
@@ -39,43 +22,51 @@ type
     property Obj: T read GetObj;
   end;
 
-  TObj<T: class> = class(TObjBase, IObj<T>)
+  TObj<T: class> = class(TInterfacedObject, IObj<T>)
   private
+    FObj : T;
     function GetObj: T;
+  public
+    destructor Destroy; override;
   end;
 
   {$ENDIF}
 
-  TObj = class
+  IObj = Interface(IInterface)
+  ['{E60D7897-F083-411B-990D-C87523A80E41}']
+    function GetObj : TObject;
+    property Obj: TObject read GetObj;
+  End;
+
+  TObj = class(TInterfacedObject, IObj)
+  private
+    FObj : TObject;
+    function GetObj : TObject;
   public
+    property Obj : TObject read GetObj;
+
     {$IF (CompilerVersion < 20) or defined(UseBaseObj) }
     class function Create(Obj: TObject) : IObj; overload;
     {$ENDIF}
 
     {$IF CompilerVersion >= 20}
     class function Create<T:class>(Obj: T) : IObj<T>; overload;
-
     {$ENDIF}
+
+    destructor Destroy; override;
   end;
 
 implementation
 
-// TObjBase
-destructor TObjBase.Destroy;
-begin
-  FObj.free;
-  inherited;
-end;
-
-function TObjBase.GetObj: TObject;
+function TObj.GetObj: TObject;
 begin
   result := FObj;
 end;
 
-constructor TObjBase.Create(Obj: TObject);
+destructor TObj.Destroy;
 begin
-  inherited Create;
-  FObj := Obj;
+  FObj.free;
+  inherited;
 end;
 
 
@@ -84,13 +75,24 @@ end;
 { TObj<T> }
 function TObj<T>.GetObj: T;
 begin
-  Result := T(inherited GetObj);
+  Result := FObj;
+end;
+
+destructor TObj<T>.Destroy;
+begin
+  FObj.free;
+  inherited;
 end;
 
 { TObj }
 class function TObj.Create<T>(Obj: T): IObj<T>;
+var
+  resultObj : TObj<T>;
 begin
-  result := TObj<T>.Create(Obj);
+  resultObj := TObj<T>.Create;
+  resultObj.FObj := Obj;
+
+  result := resultObj;
 end;
 
 {$IFEND}
@@ -100,8 +102,13 @@ end;
 { TObj }
 
 class function TObj.Create(Obj: TObject): IObj;
+var
+  resultObj : TObj;
 begin
-  result := TObjBase.Create(Obj);
+  resultObj := TObj.Create;
+  resultObj.FObj := Obj;
+
+  result := resultObj;
 end;
 
 {$ENDIF}

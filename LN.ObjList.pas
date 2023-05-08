@@ -57,7 +57,7 @@ end;
 
 class function TObjList.CreateObjList<T>: IObj<TObjList<T>>;
 begin
-  result := TObj<TObjList<T>>.Create(TObjList<T>.Create);
+  result := TObj.Create(TObjList<T>.Create);
 end;
 
 
