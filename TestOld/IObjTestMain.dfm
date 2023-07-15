@@ -96,7 +96,7 @@ object frmIObjTestMain: TfrmIObjTestMain
     object cbLeaked: TCheckBox
       AlignWithMargins = True
       Left = 2
-      Top = 259
+      Top = 286
       Width = 212
       Height = 17
       Margins.Top = 50
@@ -106,7 +106,7 @@ object frmIObjTestMain: TfrmIObjTestMain
     object cbStandardFix: TCheckBox
       AlignWithMargins = True
       Left = 2
-      Top = 289
+      Top = 316
       Width = 212
       Height = 17
       Margins.Top = 10
@@ -116,7 +116,7 @@ object frmIObjTestMain: TfrmIObjTestMain
     object cbIObjFix: TCheckBox
       AlignWithMargins = True
       Left = 2
-      Top = 319
+      Top = 346
       Width = 212
       Height = 17
       Margins.Top = 10
@@ -126,7 +126,7 @@ object frmIObjTestMain: TfrmIObjTestMain
     object cbLineNumbers: TCheckBox
       AlignWithMargins = True
       Left = 2
-      Top = 389
+      Top = 416
       Width = 212
       Height = 17
       Margins.Top = 50
@@ -134,13 +134,27 @@ object frmIObjTestMain: TfrmIObjTestMain
       TabOrder = 8
       OnClick = cbLineNumbersClick
     end
+    object btnCircularRef: TButton
+      AlignWithMargins = True
+      Left = 11
+      Top = 211
+      Width = 200
+      Height = 25
+      Margins.Left = 10
+      Margins.Top = 5
+      Margins.Right = 10
+      Margins.Bottom = 5
+      Caption = 'Circular References'
+      TabOrder = 9
+      OnClick = btnCircularRefClick
+    end
   end
   object PageControl1: TPageControl
     Left = 220
     Top = 0
     Width = 553
     Height = 582
-    ActivePage = tsHome
+    ActivePage = tsCode
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText

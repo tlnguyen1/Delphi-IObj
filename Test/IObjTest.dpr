@@ -14,7 +14,8 @@ uses
   ObjectAsPropertyLeaked in 'ObjectAsPropertyLeaked.pas',
   ObjectAsPropertyStandard in 'ObjectAsPropertyStandard.pas',
   LN.ObjList in '..\LN.ObjList.pas',
-  PersonClass in 'PersonClass.pas';
+  PersonClass in 'PersonClass.pas',
+  CircularRef in 'CircularRef.pas';
 
 {$R *.res}
 

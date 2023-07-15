@@ -7,6 +7,7 @@ uses
   LocalVars, 
   MyClassLeaked, MyClassStandard, MyClassIObj,
   ObjectAsPropertyLeaked, ObjectAsPropertyStandard, ObjectAsPropertyIObj,
+  CircularRef,
 
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, 
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, 
@@ -40,6 +41,7 @@ type
     btnIObjFix: TButton;
     memoIObjFix: TMemo;
     memoCode: TMemo;
+    btnCircularRef: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnHomeClick(Sender: TObject);
     procedure btnLocalVariablesClick(Sender: TObject);
@@ -48,6 +50,7 @@ type
     procedure btnLoopVariablesClick(Sender: TObject);
     procedure btnObjectAsPropertyClick(Sender: TObject);
     procedure cbLineNumbersClick(Sender: TObject);
+    procedure btnCircularRefClick(Sender: TObject);
   private
     function getFile(const resourceName: string): string;
     function getCode(src: TStrings; const tag: string): string;
@@ -71,11 +74,14 @@ type
     procedure btnObjectAsPropertyStandardClick(Sender: TObject);
     procedure btnObjectAsPropertyIObjClick(Sender: TObject);
 
+    procedure btnCircularRefIObjClick(Sender: TObject);
+
     procedure loadLocalVars;
     procedure loadMyClass;
     procedure loadLoopVars;
     procedure loadObjectAsProperty;
     procedure loadIObj;
+    procedure loadCircularRef;
   public
   end;
 
@@ -87,6 +93,26 @@ implementation
 {$R *.dfm}
 
 { TfrmIObjTestMain }
+
+procedure TfrmIObjTestMain.btnCircularRefClick(Sender: TObject);
+begin
+  loadCircularRef;
+  PageControl1.ActivePage := tsCode;
+end;
+
+procedure TfrmIObjTestMain.btnCircularRefIObjClick(Sender: TObject);
+var
+  couplesObj : IObj;
+  couples : TCouples;
+begin
+  try
+    couples := TCouples.Create; couplesObj := TObj.Create(couples);
+    couples.execute;
+  finally
+    cbIObjFix.Checked := true;
+  end;
+
+end;
 
 procedure TfrmIObjTestMain.btnHomeClick(Sender: TObject);
 begin
@@ -290,6 +316,20 @@ begin
   rs := TResourceStream.Create(hInstance, resourceName, RT_RCDATA); irs := TObj.Create(rs);
   ss.LoadFromStream(rs);
   result := ss.DataString;
+end;
+
+
+procedure TfrmIObjTestMain.loadCircularRef;
+begin
+  showCode(
+      '',
+      '',
+      getFile('CircularRef')
+  );
+
+  btnLeaked.OnClick := nil;
+  btnStandardFix.OnClick := nil;
+  btnIObjFix.OnClick := btnCircularRefIObjClick;
 end;
 
 

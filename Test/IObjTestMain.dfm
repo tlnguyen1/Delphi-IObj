@@ -23,6 +23,7 @@ object frmIObjTestMain: TfrmIObjTestMain
     FlowStyle = fsTopBottomLeftRight
     ShowCaption = False
     TabOrder = 0
+    ExplicitHeight = 583
     object btnHome: TButton
       AlignWithMargins = True
       Left = 11
@@ -93,43 +94,57 @@ object frmIObjTestMain: TfrmIObjTestMain
       TabOrder = 4
       OnClick = btnObjectAsPropertyClick
     end
+    object btnCircularRef: TButton
+      AlignWithMargins = True
+      Left = 11
+      Top = 211
+      Width = 200
+      Height = 25
+      Margins.Left = 10
+      Margins.Top = 5
+      Margins.Right = 10
+      Margins.Bottom = 5
+      Caption = 'Circular References'
+      TabOrder = 5
+      OnClick = btnCircularRefClick
+    end
     object cbLeaked: TCheckBox
       AlignWithMargins = True
       Left = 4
-      Top = 256
+      Top = 291
       Width = 200
       Height = 17
       Margins.Top = 50
       Align = alTop
       Caption = 'Leaked executed'
-      TabOrder = 5
+      TabOrder = 6
     end
     object cbStandardFix: TCheckBox
       AlignWithMargins = True
       Left = 4
-      Top = 286
+      Top = 321
       Width = 200
       Height = 17
       Margins.Top = 10
       Align = alTop
       Caption = 'Standard Fix executed'
-      TabOrder = 6
+      TabOrder = 7
     end
     object cbIObjFix: TCheckBox
       AlignWithMargins = True
       Left = 4
-      Top = 316
+      Top = 351
       Width = 200
       Height = 17
       Margins.Top = 10
       Align = alTop
       Caption = 'IObj Fix executed'
-      TabOrder = 7
+      TabOrder = 8
     end
     object cbLineNumbers: TCheckBox
       AlignWithMargins = True
       Left = 4
-      Top = 386
+      Top = 421
       Width = 200
       Height = 17
       Margins.Top = 50
@@ -137,7 +152,7 @@ object frmIObjTestMain: TfrmIObjTestMain
       Caption = 'Show Line Numbers'
       Checked = True
       State = cbChecked
-      TabOrder = 8
+      TabOrder = 9
       OnClick = cbLineNumbersClick
     end
   end
@@ -146,7 +161,7 @@ object frmIObjTestMain: TfrmIObjTestMain
     Top = 0
     Width = 561
     Height = 584
-    ActivePage = tsHome
+    ActivePage = tsCode
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -155,6 +170,8 @@ object frmIObjTestMain: TfrmIObjTestMain
     Font.Style = []
     ParentFont = False
     TabOrder = 1
+    ExplicitWidth = 557
+    ExplicitHeight = 583
     object tsHome: TTabSheet
       Caption = 'Home'
       TabVisible = False
@@ -196,8 +213,8 @@ object frmIObjTestMain: TfrmIObjTestMain
       object memoIObj: TMemo
         Left = 0
         Top = 0
-        Width = 557
-        Height = 575
+        Width = 553
+        Height = 574
         Margins.Bottom = 45
         Align = alClient
         ScrollBars = ssBoth
@@ -212,15 +229,17 @@ object frmIObjTestMain: TfrmIObjTestMain
         AlignWithMargins = True
         Left = 5
         Top = 5
-        Width = 547
-        Height = 565
+        Width = 543
+        Height = 564
         Margins.Left = 5
         Margins.Top = 5
         Margins.Right = 5
         Margins.Bottom = 5
-        ActivePage = tbCodeLeaked
+        ActivePage = tbCodeStandard
         Align = alClient
         TabOrder = 0
+        ExplicitWidth = 539
+        ExplicitHeight = 563
         object tbCodeLeaked: TTabSheet
           Caption = 'Leaked'
           DesignSize = (
@@ -267,8 +286,8 @@ object frmIObjTestMain: TfrmIObjTestMain
             BevelOuter = bvNone
             ScrollBars = ssBoth
             TabOrder = 0
-            ExplicitWidth = 533
-            ExplicitHeight = 481
+            ExplicitWidth = 525
+            ExplicitHeight = 479
           end
           object btnStandardFix: TButton
             Left = 3
@@ -278,7 +297,7 @@ object frmIObjTestMain: TfrmIObjTestMain
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 1
-            ExplicitTop = 494
+            ExplicitTop = 492
           end
         end
         object tbCodeIObj: TTabSheet
@@ -295,7 +314,6 @@ object frmIObjTestMain: TfrmIObjTestMain
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 0
-            ExplicitTop = 494
           end
           object memoIObjFix: TMemo
             AlignWithMargins = True
@@ -309,8 +327,6 @@ object frmIObjTestMain: TfrmIObjTestMain
             BevelOuter = bvNone
             ScrollBars = ssBoth
             TabOrder = 1
-            ExplicitWidth = 533
-            ExplicitHeight = 481
           end
         end
       end

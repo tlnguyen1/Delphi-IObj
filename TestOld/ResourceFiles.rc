@@ -10,3 +10,6 @@ ObjectAsPropertyLeaked RCDATA ObjectAsPropertyLeaked.pas
 ObjectAsPropertyStandard RCDATA ObjectAsPropertyStandard.pas
 ObjectAsPropertyIObj RCDATA ObjectAsPropertyIObj.pas
 
+CircularRef RCDATA CircularRef.pas
+
+
