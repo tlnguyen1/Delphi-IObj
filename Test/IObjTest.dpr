@@ -5,7 +5,7 @@ program IObjTest;
 uses
   Vcl.Forms,
   IObjTestMain in 'IObjTestMain.pas' {frmIObjTestMain},
-  LN.IObj in '..\LN.IObj.pas',
+  LN.Obj in '..\LN.Obj.pas',
   LocalVars in 'LocalVars.pas',
   MyClassIObj in 'MyClassIObj.pas',
   MyClassLeaked in 'MyClassLeaked.pas',

@@ -166,7 +166,7 @@ object frmIObjTestMain: TfrmIObjTestMain
           '// Non generic syntax'
           ''
           'uses'
-          '    LN.IObj;'
+          '    LN.Obj;'
           ''
           '---'
           'var'
@@ -215,8 +215,6 @@ object frmIObjTestMain: TfrmIObjTestMain
         ActivePage = tbCodeIObj
         Align = alClient
         TabOrder = 0
-        ExplicitWidth = 531
-        ExplicitHeight = 561
         object tbCodeLeaked: TTabSheet
           Caption = 'Leaked'
           DesignSize = (
@@ -288,7 +286,6 @@ object frmIObjTestMain: TfrmIObjTestMain
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 0
-            ExplicitTop = 490
           end
           object memoIObjFix: TMemo
             AlignWithMargins = True
@@ -302,8 +299,6 @@ object frmIObjTestMain: TfrmIObjTestMain
             BevelOuter = bvNone
             ScrollBars = ssBoth
             TabOrder = 1
-            ExplicitWidth = 517
-            ExplicitHeight = 477
           end
         end
       end

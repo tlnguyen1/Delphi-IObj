@@ -2,7 +2,7 @@ unit PersonClass;
 
 interface
 uses
-  System.Classes, LN.IObj, System.SysUtils;
+  System.Classes, LN.Obj, System.SysUtils;
 
 type
   TPerson = class

@@ -2,8 +2,8 @@ object frmIObjTestMain: TfrmIObjTestMain
   Left = 0
   Top = 0
   Caption = 'IObj Test Main'
-  ClientHeight = 585
-  ClientWidth = 785
+  ClientHeight = 584
+  ClientWidth = 781
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -18,12 +18,11 @@ object frmIObjTestMain: TfrmIObjTestMain
     Left = 0
     Top = 0
     Width = 220
-    Height = 585
+    Height = 584
     Align = alLeft
     FlowStyle = fsTopBottomLeftRight
     ShowCaption = False
     TabOrder = 0
-    ExplicitHeight = 584
     object btnHome: TButton
       AlignWithMargins = True
       Left = 11
@@ -145,8 +144,8 @@ object frmIObjTestMain: TfrmIObjTestMain
   object PageControl1: TPageControl
     Left = 220
     Top = 0
-    Width = 565
-    Height = 585
+    Width = 561
+    Height = 584
     ActivePage = tsHome
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
@@ -156,8 +155,6 @@ object frmIObjTestMain: TfrmIObjTestMain
     Font.Style = []
     ParentFont = False
     TabOrder = 1
-    ExplicitWidth = 561
-    ExplicitHeight = 584
     object tsHome: TTabSheet
       Caption = 'Home'
       TabVisible = False
@@ -227,90 +224,93 @@ object frmIObjTestMain: TfrmIObjTestMain
         object tbCodeLeaked: TTabSheet
           Caption = 'Leaked'
           DesignSize = (
-            539
-            529)
+            535
+            528)
           object memoLeaked: TMemo
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 533
-            Height = 481
+            Width = 529
+            Height = 480
             Margins.Bottom = 45
             Align = alClient
             BevelInner = bvNone
             BevelOuter = bvNone
             ScrollBars = ssBoth
             TabOrder = 0
-            ExplicitWidth = 529
-            ExplicitHeight = 480
           end
           object btnLeaked: TButton
             Left = 3
-            Top = 494
+            Top = 493
             Width = 150
             Height = 25
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 1
-            ExplicitTop = 493
           end
         end
         object tbCodeStandard: TTabSheet
           Caption = 'Standard Fix'
           ImageIndex = 1
           DesignSize = (
-            539
-            529)
+            535
+            528)
           object memoStandardFix: TMemo
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 533
-            Height = 481
+            Width = 529
+            Height = 480
             Margins.Bottom = 45
             Align = alClient
             BevelInner = bvNone
             BevelOuter = bvNone
             ScrollBars = ssBoth
             TabOrder = 0
+            ExplicitWidth = 533
+            ExplicitHeight = 481
           end
           object btnStandardFix: TButton
             Left = 3
-            Top = 494
+            Top = 493
             Width = 150
             Height = 25
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 1
+            ExplicitTop = 494
           end
         end
         object tbCodeIObj: TTabSheet
           Caption = 'IObj Fix'
           ImageIndex = 2
           DesignSize = (
-            539
-            529)
+            535
+            528)
           object btnIObjFix: TButton
             Left = 3
-            Top = 494
+            Top = 493
             Width = 150
             Height = 25
             Anchors = [akLeft, akBottom]
             Caption = 'Execute'
             TabOrder = 0
+            ExplicitTop = 494
           end
           object memoIObjFix: TMemo
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 533
-            Height = 481
+            Width = 529
+            Height = 480
             Margins.Bottom = 45
             Align = alClient
             BevelInner = bvNone
             BevelOuter = bvNone
             ScrollBars = ssBoth
             TabOrder = 1
+            ExplicitWidth = 533
+            ExplicitHeight = 481
           end
         end
       end

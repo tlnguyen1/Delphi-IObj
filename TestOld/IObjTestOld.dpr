@@ -12,7 +12,7 @@ uses
   ObjectAsPropertyIObj in 'ObjectAsPropertyIObj.pas',
   ObjectAsPropertyLeaked in 'ObjectAsPropertyLeaked.pas',
   ObjectAsPropertyStandard in 'ObjectAsPropertyStandard.pas',
-  LN.IObj in '..\LN.IObj.pas';
+  LN.Obj in '..\LN.Obj.pas';
 
 {$R *.res}
 

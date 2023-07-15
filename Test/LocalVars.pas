@@ -2,7 +2,7 @@ unit LocalVars;
 
 interface
 uses
-  LN.IObj, System.Classes, System.SysUtils;
+  LN.Obj, System.Classes, System.SysUtils;
 
 type
   TLocalVars = class

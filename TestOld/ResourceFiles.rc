@@ -1,4 +1,4 @@
-IObj RCDATA ..\LN.IObj.pas
+IObj RCDATA ..\LN.Obj.pas
 
 LocalVars RCDATA LocalVars.pas
 

@@ -129,7 +129,7 @@
             <Form>frmIObjTestMain</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\LN.IObj.pas"/>
+        <DCCReference Include="..\LN.Obj.pas"/>
         <DCCReference Include="LocalVars.pas"/>
         <DCCReference Include="MyClassIObj.pas"/>
         <DCCReference Include="MyClassLeaked.pas"/>

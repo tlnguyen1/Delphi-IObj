@@ -3,7 +3,7 @@ unit IObjTestMain;
 interface
 
 uses
-  LN.IObj, System.Types,
+  LN.Obj, System.Types,
   LocalVars, 
   MyClassLeaked, MyClassStandard, MyClassIObj,
   ObjectAsPropertyLeaked, ObjectAsPropertyStandard, ObjectAsPropertyIObj,

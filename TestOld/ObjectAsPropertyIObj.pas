@@ -2,7 +2,7 @@ unit ObjectAsPropertyIObj;
 
 interface
 uses
-  LN.IObj, System.Classes, System.SysUtils, Dialogs;
+  LN.Obj, System.Classes, System.SysUtils, Dialogs;
 
 type
   TPerson = class(TComponent)

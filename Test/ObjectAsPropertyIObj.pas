@@ -2,7 +2,7 @@ unit ObjectAsPropertyIObj;
 
 interface
 uses
-  PersonClass, LN.IObj, LN.ObjList, System.Classes, Generics.Collections, System.SysUtils;
+  PersonClass, LN.Obj, LN.ObjList, System.Classes, Generics.Collections, System.SysUtils;
 
 type
   THouse= class(TComponent)
