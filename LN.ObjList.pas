@@ -2,7 +2,7 @@ unit LN.ObjList;
 
 interface
 uses
-  LN.IObj, Generics.Collections;
+  LN.Obj, Generics.Collections;
 
 type
   TObjList<T:class> = class(TList<IObj<T>>);

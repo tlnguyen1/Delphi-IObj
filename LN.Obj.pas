@@ -1,4 +1,4 @@
-unit LN.IObj;
+unit LN.Obj;
 
 interface
 
@@ -14,6 +14,15 @@ type
       - Delphi support for generics starts from CompilerVersion 20
       - To compile old syntax with new compiler, add conditional define UseBaseObj
   }
+
+  // Descend your objects from this class to inherit isFreed property
+  TBObj = class(TObject)
+  private
+    fIsFreed : boolean;
+  public
+    property isFreed: boolean read fIsFreed;
+    destructor Destroy; override;
+  end;
 
   {$IF CompilerVersion >= 20}
   IObj<T> = Interface(IInterface)
@@ -65,7 +74,12 @@ end;
 
 destructor TObj.Destroy;
 begin
-  FObj.free;
+  if not assigned(FObj) then
+    exit;
+
+  if (not (FObj is TBObj)) or (not TBObj(FObj).isFreed)  then
+    FObj.Free;
+
   inherited;
 end;
 
@@ -80,7 +94,12 @@ end;
 
 destructor TObj<T>.Destroy;
 begin
-  FObj.free;
+  if not assigned(FObj) then
+    exit;
+
+  if (not (FObj is TBObj)) or (not TBObj(FObj).isFreed)  then
+    FObj.Free;
+
   inherited;
 end;
 
@@ -112,5 +131,13 @@ begin
 end;
 
 {$ENDIF}
+
+{ TBObj }
+
+destructor TBObj.Destroy;
+begin
+  FIsFreed := True;
+  inherited;
+end;
 
 end.
